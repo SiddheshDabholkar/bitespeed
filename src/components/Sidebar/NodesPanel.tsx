@@ -5,6 +5,7 @@ export const NodesPanel = () => {
   return (
     <div className="space-y-4">
       <h3 className="text-sm font-semibold">Nodes</h3>
+      {/* // rendering all the available nodes  */}
       <div className="space-y-2">
         {nodesList.map((m, i) => (
           <SingleNode key={i} {...m} />

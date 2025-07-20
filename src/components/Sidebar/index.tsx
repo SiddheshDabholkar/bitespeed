@@ -22,6 +22,7 @@ const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <div className="w-full h-full p-4 overflow-y-auto">
+      {/* showing setting pannel when node is selected  */}
       {selectedNodeId ? (
         <SettingsPanel
           nodeId={selectedNodeId}

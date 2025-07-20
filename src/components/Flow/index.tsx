@@ -46,12 +46,14 @@ const Flow: React.FC<FlowProps> = ({
 
   const onConnect = useCallback(
     (params: Connection) => {
+      // we check if the edge has already exists or not
       const sourceHasEdge = edges.some(
         (edge: Edge) =>
           edge.source === params.source &&
           edge.sourceHandle === params.sourceHandle
       );
 
+      // we create a new edge if its doesnt exists earlier
       if (!sourceHasEdge) {
         setEdges((eds: Edge[]) => addEdge(params, eds));
       }
