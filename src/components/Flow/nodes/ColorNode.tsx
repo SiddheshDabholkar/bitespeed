@@ -7,20 +7,28 @@ import {
 import type { NODE_LIST_ENUMS } from "@/constant/nodesList";
 import { Handle, Position, type Node, type NodeProps } from "@xyflow/react";
 
-type TextNodeData = {
-  text?: string;
+type ColorNodeData = {
+  color?: string;
 };
-type TextNode = Node<TextNodeData, NODE_LIST_ENUMS.textNode>;
-export const TextNode: React.FC<NodeProps<TextNode>> = ({ data }) => {
+type ColorNode = Node<ColorNodeData, NODE_LIST_ENUMS.colorNode>;
+export const ColorNode: React.FC<NodeProps<ColorNode>> = ({ data }) => {
   return (
     <BaseNode className="w-64">
       <BaseNodeHeader>
-        <BaseNodeHeaderTitle>Text Message</BaseNodeHeaderTitle>
+        <BaseNodeHeaderTitle className="text-sm">
+          Select Color
+        </BaseNodeHeaderTitle>
       </BaseNodeHeader>
       <BaseNodeContent>
-        <div className="text-sm text-muted-foreground">
-          {data.text || "Click to Enter your message"}
-        </div>
+        {data?.color ? (
+          <span
+            style={{ height: 30, width: "100%", background: data.color }}
+          ></span>
+        ) : (
+          <div className="text-sm text-muted-foreground">
+            Click to Enter your color
+          </div>
+        )}
       </BaseNodeContent>
 
       <Handle

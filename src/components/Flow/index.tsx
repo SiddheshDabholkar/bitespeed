@@ -14,9 +14,12 @@ import {
   type OnEdgesChange,
 } from "@xyflow/react";
 import { TextNode } from "./nodes/TextNode";
+import { ColorNode } from "./nodes/ColorNode";
+import { NODE_LIST_ENUMS } from "@/constant/nodesList";
 
 const nodeTypes = {
   textNode: TextNode,
+  colorNode: ColorNode,
 };
 
 type FlowProps = {
@@ -86,11 +89,22 @@ const Flow: React.FC<FlowProps> = ({
         y: event.clientY,
       });
 
+      const dataType = (() => {
+        if (type === NODE_LIST_ENUMS.colorNode) {
+          return {
+            color: "",
+          };
+        }
+        return {
+          text: "",
+        };
+      })();
+
       const newNode: Node = {
         id: uuidv4(),
         type,
         position,
-        data: { text: "" },
+        data: dataType,
       };
 
       setNodes((nds: Node[]) => nds.concat(newNode));

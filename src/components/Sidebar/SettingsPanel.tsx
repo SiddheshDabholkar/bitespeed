@@ -1,58 +1,90 @@
-import { useState, useEffect } from "react";
+import type { NodeInputType } from "@/types/common";
+import SettingHeader from "./SettingHeader";
+import { NODE_LIST_ENUMS } from "@/constant/nodesList";
 import { Button } from "../ui/button";
-import { ArrowLeft } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Textarea } from "../ui/textarea";
-import type { voidFunction } from "@/types/common";
 
-type SettingsPanelProps = {
-  nodeId: string;
-  nodeData?: Record<string, unknown>;
-  onUpdateNode: (nodeId: string, data: Record<string, unknown>) => void;
-  onBack?: voidFunction;
-};
-
-export const SettingsPanel = ({
+export const SettingsPanel: NodeInputType = ({
   nodeId,
   nodeData,
   onUpdateNode,
   onBack,
-}: SettingsPanelProps) => {
-  const [text, setText] = useState("");
+}) => {
+  const isTextInput = nodeData && nodeData.type === NODE_LIST_ENUMS.textNode;
+  const isColorInput = nodeData && nodeData.type === NODE_LIST_ENUMS.colorNode;
 
-  useEffect(() => {
-    setText((nodeData?.text as string) || "");
-  }, [nodeData]);
+  const [text, setText] = useState("");
+  const [color, setColor] = useState("");
 
   const handleSave = () => {
-    onUpdateNode(nodeId, { text });
+    const payload = (() => {
+      if (isTextInput) {
+        return { text };
+      }
+      if (isColorInput) {
+        return { color };
+      }
+      return {};
+    })();
+    console.log("payload", payload);
+    onUpdateNode(nodeId, payload);
     if (onBack) {
       onBack();
     }
   };
 
+  const buttonText = (() => {
+    if (isTextInput) {
+      return "Update Message";
+    }
+    if (isColorInput) {
+      return "Update Color";
+    }
+    return "";
+  })();
+
+  useEffect(() => {
+    if (isTextInput) {
+      setText((nodeData?.data as { text: string })?.text || "");
+    }
+    if (isColorInput) {
+      setColor((nodeData?.data as { color: string })?.color || "");
+    }
+  }, [nodeData, isTextInput, isColorInput]);
+
   return (
     <div className="space-y-4">
-      <div className="flex items-center gap-2">
-        {onBack && (
-          <Button variant="ghost" size="icon" onClick={onBack}>
-            <ArrowLeft className="w-4 h-4" />
-          </Button>
-        )}
-        <h3 className="text-sm font-semibold">Settings</h3>
-      </div>
+      <SettingHeader onBack={onBack} />
 
-      <div className="space-y-2">
-        <label className="text-sm font-medium">Message Text</label>
-        <Textarea
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="Enter your message..."
-          className="min-h-[100px]"
-        />
-      </div>
+      {isTextInput && (
+        <div className="space-y-2">
+          <label className="text-sm font-medium">Message Text</label>
+          <Textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Enter your message..."
+            className="min-h-[100px]"
+          />
+        </div>
+      )}
+
+      {isColorInput && (
+        <div className="space-y-2 flex items-center">
+          <label className="text-sm font-medium mb-0">Change color</label>
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => {
+              console.log("e.target.value", e.target.value);
+              setColor(e.target.value);
+            }}
+          />
+        </div>
+      )}
 
       <Button onClick={handleSave} className="w-full">
-        Update Message
+        {buttonText}
       </Button>
     </div>
   );

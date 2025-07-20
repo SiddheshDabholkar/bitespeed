@@ -25,7 +25,7 @@ const Sidebar: React.FC<SidebarProps> = ({
       {selectedNodeId ? (
         <SettingsPanel
           nodeId={selectedNodeId}
-          nodeData={selectedNode?.data}
+          nodeData={selectedNode!}
           onUpdateNode={onUpdateNode}
           onBack={onClearSelection}
         />
