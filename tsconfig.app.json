@@ -19,7 +19,6 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
@@ -27,7 +26,8 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "erasableSyntaxOnly": false
   },
   "include": ["src"]
 }

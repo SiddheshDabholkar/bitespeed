@@ -1,4 +1,4 @@
-import nodesList from "@/constant/nodesList";
+import { nodesList } from "@/constant/nodesList";
 import SingleNode from "./SingleNode";
 
 export const NodesPanel = () => {

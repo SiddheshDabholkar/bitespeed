@@ -1,7 +1,7 @@
 import type { SingleNodeType } from "@/types/common";
 
 const onDragStart = (event: React.DragEvent, nodeType: string) => {
-  event.dataTransfer.setData("application/reactflow", nodeType);
+  event.dataTransfer.setData("text/plain", nodeType);
   event.dataTransfer.effectAllowed = "move";
 };
 

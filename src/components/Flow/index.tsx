@@ -1,4 +1,5 @@
 import { useCallback, useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
 import {
   ReactFlow,
   Background,
@@ -75,8 +76,7 @@ const Flow: React.FC<FlowProps> = ({
     (event: React.DragEvent) => {
       event.preventDefault();
 
-      const type = event.dataTransfer.getData("application/reactflow");
-
+      const type = event.dataTransfer.getData("text/plain");
       if (typeof type === "undefined" || !type) {
         return;
       }
@@ -87,7 +87,7 @@ const Flow: React.FC<FlowProps> = ({
       });
 
       const newNode: Node = {
-        id: `${type}-${Date.now()}`,
+        id: uuidv4(),
         type,
         position,
         data: { text: "" },
