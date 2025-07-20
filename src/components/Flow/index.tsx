@@ -118,7 +118,14 @@ const Flow: React.FC<FlowProps> = ({
       >
         <Background />
         <Controls className="!bg-background !border-border [&_button]:!bg-background [&_button]:!border-border [&_button]:!text-foreground [&_button:hover]:!bg-accent" />
-        <MiniMap className="!bg-card !border-border !border-2 hidden md:block" />
+        <MiniMap
+          position="top-left"
+          style={{
+            height: 60,
+            width: 100,
+          }}
+          className="!bg-card !border-border !border-2  block "
+        />
       </ReactFlow>
     </div>
   );
